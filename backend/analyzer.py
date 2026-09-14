@@ -127,7 +127,13 @@ def analyze_images(
             config=json_config,
         )
         _accumulate_usage(token_usage, pass1_resp)
-        pass1_data = json.loads(pass1_resp.text)
+        raw_pass1 = json.loads(pass1_resp.text)
+        if isinstance(raw_pass1, list):
+            pass1_data = raw_pass1[0] if raw_pass1 else {}
+        elif isinstance(raw_pass1, dict):
+            pass1_data = raw_pass1
+        else:
+            pass1_data = {}
     except Exception as e:
         warnings.append(f"Pass 1 error: {e}")
         pass1_data = {"scene": {}, "inventory": []}
@@ -154,7 +160,13 @@ def analyze_images(
             config=json_config,
         )
         _accumulate_usage(token_usage, pass2_resp)
-        pass2_data = json.loads(pass2_resp.text)
+        raw_pass2 = json.loads(pass2_resp.text)
+        if isinstance(raw_pass2, list):
+            pass2_data = raw_pass2[0] if raw_pass2 else {}
+        elif isinstance(raw_pass2, dict):
+            pass2_data = raw_pass2
+        else:
+            pass2_data = {}
     except Exception as e:
         warnings.append(f"Pass 2 error: {e}")
         pass2_data = {
@@ -228,7 +240,11 @@ def _parse_bbox(raw) -> Optional[BoundingBox]:
 
 def _parse_detected_objects(items: list) -> list[DetectedObject]:
     results = []
+    if not isinstance(items, list):
+        return results
     for obj in items:
+        if not isinstance(obj, dict):
+            continue
         try:
             results.append(DetectedObject(
                 name=obj.get("name", "Unknown"),
@@ -245,7 +261,11 @@ def _parse_detected_objects(items: list) -> list[DetectedObject]:
 
 def _parse_uncertain(items: list) -> list[UncertainMatch]:
     results = []
+    if not isinstance(items, list):
+        return results
     for obj in items:
+        if not isinstance(obj, dict):
+            continue
         try:
             results.append(UncertainMatch(
                 object_name=obj.get("object_name", obj.get("name", "Unknown")),
