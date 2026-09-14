@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Change Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Room Change Detector</h1>
+            <p class="subtitle">Upload before and after photos to analyze room changes</p>
+        </header>
+
+        <!-- API Key is now handled securely on the server via .env -->
+
+        <section class="upload-container">
+            <div class="upload-zone-wrapper">
+                <h3>Before Photos</h3>
+                <div class="upload-zone" id="drop-zone-before">
+                    <p>Drag & drop or click to upload</p>
+                    <p class="text-muted text-sm">Max 3 images</p>
+                    <input type="file" id="file-input-before" accept="image/*" multiple style="display: none;">
+                </div>
+                <div class="preview-container" id="preview-before"></div>
+                <button class="btn btn-secondary clear-btn" id="clear-before">Clear Before Photos</button>
+            </div>
+
+            <div class="upload-zone-wrapper">
+                <h3>After Photos</h3>
+                <div class="upload-zone" id="drop-zone-after">
+                    <p>Drag & drop or click to upload</p>
+                    <p class="text-muted text-sm">Max 3 images</p>
+                    <input type="file" id="file-input-after" accept="image/*" multiple style="display: none;">
+                </div>
+                <div class="preview-container" id="preview-after"></div>
+                <button class="btn btn-secondary clear-btn" id="clear-after">Clear After Photos</button>
+            </div>
+        </section>
+
+        <div class="action-section">
+            <div class="action-buttons" style="display: flex; gap: 10px; justify-content: center;">
+            <button id="load-demo-btn" class="btn btn-secondary">Load Demo Data</button>
+            <button id="analyze-btn" class="btn btn-primary" disabled>Analyze Changes</button>
+        </div>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Analyzing... this takes 15-30 seconds</p>
+        </div>
+
+        <div id="error-container" class="hidden alert alert-danger"></div>
+
+        <section id="results" class="hidden">
+            <h2>Analysis Results</h2>
+            
+            <div class="metrics-bar" id="metrics-bar">
+                <!-- Metrics populated by JS -->
+            </div>
+
+            <div class="card" id="scene-assessment">
+                <h3>Scene Assessment</h3>
+                <div id="scene-content"></div>
+            </div>
+
+            <div id="confirmed-changes-section">
+                <h3>Confirmed Changes</h3>
+                <div id="confirmed-changes-list"></div>
+            </div>
+
+            <div id="uncertain-matches-section" class="hidden">
+                <h3>Uncertain Matches</h3>
+                <div id="uncertain-matches-list"></div>
+            </div>
+
+            <div class="card" id="unchanged-objects-section">
+                <details>
+                    <summary><h3>Unchanged Objects</h3></summary>
+                    <div id="unchanged-objects-list"></div>
+                </details>
+            </div>
+        </section>
+
+        <footer>
+            <p>Prototype &mdash; Room Change Detector</p>
+        </footer>
+    </div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "set1": {
+    "description": "Normal changes: move, add, hide, unchanged",
+    "expected_changes": [
+      {"object": "Mug", "expected_status": "moved", "detail": "From left side to right side of desk"},
+      {"object": "Sticky Notes", "expected_status": "added", "detail": "New object on wall"},
+      {"object": "Phone", "expected_status": "not_verifiable", "detail": "Not visible in after image, could be hidden"},
+      {"object": "Book", "expected_status": "unchanged", "detail": "Same position"},
+      {"object": "Pencil Holder", "expected_status": "unchanged", "detail": "Same position"}
+    ],
+    "expected_false_positives": 0,
+    "notes": "Lighting shifts slightly warmer-to-cooler but no physical changes from lighting"
+  },
+  "set2": {
+    "description": "No changes, different lighting only",
+    "expected_changes": [],
+    "expected_false_positives": 0,
+    "notes": "All objects identical positions. Warm lighting shift must not trigger any change detection."
+  },
+  "set3": {
+    "description": "Ambiguous - cropped after view",
+    "expected_changes": [
+      {"object": "Mug", "expected_status": "not_verifiable", "detail": "Not in frame in after image"},
+      {"object": "Phone", "expected_status": "not_verifiable", "detail": "Not in frame in after image"},
+      {"object": "Book", "expected_status": "unchanged", "detail": "Visible in both views"},
+      {"object": "Pencil Holder", "expected_status": "unchanged", "detail": "Visible in both views"}
+    ],
+    "expected_false_positives": 0,
+    "notes": "App should flag limited coverage and request wider angle photo"
+  }
+}
