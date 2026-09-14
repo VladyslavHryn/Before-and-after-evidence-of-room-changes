@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from typing import List
 import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
 
 from analyzer import analyze_images, create_evidence_pairs
